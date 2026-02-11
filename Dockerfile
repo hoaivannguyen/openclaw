@@ -33,6 +33,10 @@ COPY scripts ./scripts
 
 RUN pnpm install --frozen-lockfile
 
+# Install the full Playwright package (AI browser features: snapshot, act, etc.)
+# PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 because Chromium is already installed via apt.
+RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm add playwright@1.58.2
+
 COPY . .
 RUN pnpm build
 # Force pnpm for UI build (Bun may fail on ARM/Synology architectures)
